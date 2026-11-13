@@ -20,7 +20,7 @@ npm run build
 npm run preview
 ```
 
-Preview: http://localhost:4173. Publicación estática: comando `npm run build`, directorio `dist`. No requiere backend ni credenciales. La sesión se guarda en localStorage de este navegador y origen; no se sincroniza entre dispositivos. Reiniciar una misión activa solicita confirmación; reintentar una misión terminada conserva su resumen.
+Preview: http://localhost:4173. Publicación estática: comando `npm run build`, directorio `dist`. No requiere backend ni credenciales. La sesión v2 se valida contra el historial determinista; payloads inválidos o sin versión se descartan. Se guarda en localStorage de este navegador y origen; no se sincroniza entre dispositivos. Reiniciar una misión activa solicita confirmación; reintentar una misión terminada conserva su resumen.
 
 ## Modelo V1.0
 
@@ -67,7 +67,7 @@ Estrategia ganadora (ECLSS / cultivo / protección):
 
 Resultado: 16 / 31 / 20 / 23 / 26; una cosecha. Para derrota por radiación, ejecutar cuatro ciclos nominales sin refugio: exposición 44.
 
-Verificado: 10 pruebas Vitest y build TypeScript/Vite. Pendiente en navegador: ambas partidas a 1440 y 390 px, recarga antes de ciclo 4, Tab/Enter, consola, contraste y ausencia de desbordamientos. Preview inició correctamente; no hubo navegador conectado para QA visual. No interpretar build como verificación visual.
+Verificado: 19 pruebas Vitest y build TypeScript/Vite. Pendiente en navegador: ambas partidas a 1440 y 390 px, recarga antes de ciclo 4, Tab/Enter, consola, contraste y ausencia de desbordamientos. Preview inició correctamente; no hubo navegador conectado para QA visual. No interpretar build como verificación visual.
 
 ## Entrega y respaldo
 
@@ -84,3 +84,50 @@ Respaldo offline: conservar repositorio, dependencias instaladas y dist; ejecuta
 - 1:25–1:30: «NEXUS convierte compromisos de ingeniería espacial en una práctica STEM medible y accesible».
 
 Guion preparado; duración real y fluidez pendientes de ensayo cronometrado. Congelar funcionalidades antes de ensayo final.
+
+## Ejecución del plan técnico
+
+Baseline: commit `89d60c8`, tag `mvp-baseline`. Reformato sin cambio de comportamiento: `e467557`. Estabilidad: `1fa5d9a`. Mejoras mínimas de accesibilidad: `a48627d`.
+
+C1 no pudo certificarse: no hay navegador conectado para smoke manual. Se aplica criterio conservador de descarte del plan: fases 2 y 3 no ejecutadas. No se implementaron `getCycleBreakdown` ni contrafactual; sus paneles y tests de paridad no existen. P1 y P2 no ejecutados. Modelo matemático y copy científico intactos.
+
+Fase 1 incorpora error boundary con reinicio, persistencia v2 validada, captura de errores de ejecución, bloqueo de doble click durante 500 ms, reset de selección por ciclo y warning derivado de supervivencia. El warning no bloquea registrar el fallo. Fase 4 mínima incorpora scroll y etiquetas del chart, ratings semánticos, avisos ARIA, foco por ciclo, metadatos y favicon.
+
+### Deploy
+
+URL pública: no disponible. No se detectó CLI Vercel, proyecto enlazado ni archivo de autenticación Vercel en ubicaciones habituales. No se solicitaron ni almacenaron credenciales. `dist` está generado para entrega; no se publicó ni se hizo push.
+
+Con cuenta Vercel autenticada, ejecutar desde este repo:
+
+```sh
+npm ci
+npm test
+npm run build
+npx vercel --prod
+```
+
+Alternativa: cargar `dist` en Netlify Drop con cuenta del equipo. Registrar URL real solamente después de verificar acceso público. Metadatos no incluyen `og:url` ni imagen social remota porque no hay dominio público confirmado.
+
+### Checklist de QA
+
+- [x] 19 tests: 13 de motor, 6 de persistencia; incluyen warnings de alimentos y O₂.
+- [x] TypeScript y build Vite limpios.
+- [x] Modelo conserva victoria exacta 16 / 31 / 20 / 23 / 26.
+- [x] Persistencia: corrupto, sin versión, roundtrip, normalización victoria, historial inválido y storage inaccesible.
+- [x] Baseline y commits por fase; plan vinculante sin modificar.
+- [ ] Navegador: victoria y derrota por radiación de punta a punta.
+- [ ] Recarga C3, payload corrupto, C4 refugio → C5 nominal/espera/normal.
+- [ ] Forzar error de render en dev y confirmar fallback/reinicio; retirar inyección antes de publicar.
+- [ ] Forzar error de ejecución en dev; confirmar error inline y un solo ciclo ante doble click.
+- [ ] 390/1440 px: sin overflow global, chart con scroll, tabla accesible.
+- [ ] Tab/Enter, foco, contraste ≥4.5:1 y consola limpia.
+- [ ] URL pública desde otro dispositivo/red; favicon y metadatos en producción.
+- [ ] Video 1080p, dos ensayos cronometrados, ficha Space Apps enviada.
+
+`npm ci` reportó 3 vulnerabilidades de dependencias (1 moderada, 2 críticas); no se aplicó actualización automática ni cambio de dependencias. Esa observación no equivale a análisis de explotabilidad.
+
+### Créditos
+
+NEXUS: Último Horizonte, equipo LifePlants. Referencias científicas: NASA y NASA Langley, enlaces arriba. Tipografías existentes: Inter y JetBrains Mono. Iconos: Lucide. Favicon geométrico propio del proyecto, sin logo NASA. Esta entrega no incorpora fotografías NASA ni atribuye autoría fotográfica inexistente.
+
+Definition of Done pendiente: smoke manual, publicación pública, video, ensayos y entrega oficial. Código mínimo disponible; no declarar entrega completa hasta cerrar esos puntos.
