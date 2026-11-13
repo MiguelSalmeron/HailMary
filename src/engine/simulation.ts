@@ -278,6 +278,7 @@ export function previewCycle(state: SimulationState, decision: CycleDecision): C
     validation,
     projected,
     deltas,
+    survivalWarning: sim.crewSurvivalFailure,
     projectedCropProgress: sim.crewSurvivalFailure ? state.cropProgress : sim.nextCropProgress,
     willHarvest: sim.crewSurvivalFailure ? false : sim.harvested,
     solarGeneration: sim.solarGeneration,

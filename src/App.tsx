@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import type { CycleDecision } from './engine/types';
 import { createInitialState, advanceCycle } from './engine/simulation';
 import { loadSession, saveSession, type PersistedSession } from './storage/persistence';
 import { BriefingScreen } from './components/BriefingScreen';
@@ -11,12 +12,31 @@ export default function App() {
     simulation: createInitialState(),
     previousAttempts: [],
   });
+  const [executionError, setExecutionError] = useState('');
+  const executing = useRef(false);
+  const unlockTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(() => () => { if (unlockTimer.current) clearTimeout(unlockTimer.current); }, []);
   const main = useRef<HTMLElement>(null);
   useEffect(() => { saveSession(session); }, [session]);
-  useEffect(() => { main.current?.focus(); }, [session.phase]);
+  useEffect(() => { main.current?.focus(); }, [session.phase, session.simulation.cycle]);
+
+  function execute(decision: CycleDecision) {
+    if (executing.current) return;
+    executing.current = true;
+    setExecutionError('');
+    try {
+      const simulation = advanceCycle(session.simulation, decision);
+      setSession({ ...session, simulation, phase: simulation.status === 'in_progress' ? 'mission' : 'debrief' });
+    } catch (error) {
+      setExecutionError(error instanceof Error ? error.message : 'No pudimos ejecutar el ciclo. Revisá la configuración.');
+    } finally {
+      unlockTimer.current = setTimeout(() => { executing.current = false; }, 500);
+    }
+  }
 
   function restart() {
     if (session.phase === 'mission' && !window.confirm('¿Reiniciar misión? Se perderá el progreso del intento actual.')) return;
+    setExecutionError('');
     const state = session.simulation;
     setSession({
       phase: 'mission',
@@ -41,6 +61,7 @@ export default function App() {
         <span>Lunar Mission Trainer · V1.0</span>
       </header>
       <main ref={main} tabIndex={-1}>
+        {executionError && <p className="mission-error" role="alert">{executionError}</p>}
         {session.phase === 'briefing' ? (
           <BriefingScreen
             onStart={restart}
@@ -51,16 +72,10 @@ export default function App() {
           />
         ) : session.phase === 'mission' ? (
           <MissionControl
+            key={session.simulation.cycle}
             state={session.simulation}
             onRestart={restart}
-            onExecute={decision => {
-              const simulation = advanceCycle(session.simulation, decision);
-              setSession({
-                ...session,
-                simulation,
-                phase: simulation.status === 'in_progress' ? 'mission' : 'debrief',
-              });
-            }}
+            onExecute={execute}
           />
         ) : (
           <DebriefScreen

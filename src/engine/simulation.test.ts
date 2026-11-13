@@ -249,3 +249,20 @@ it('bloquea demanda hídrica y limita las reservas a 100 unidades', () => {
     expect(value).toBeLessThanOrEqual(100);
   }
 });
+
+it.each([
+  ['food', 4, 'food_depleted'],
+  ['oxygen', 10, 'oxygen_depleted'],
+] as const)('advierte supervivencia por %s sin bloquear ejecución', (resource, amount, code) => {
+  const state = createInitialState();
+  state.cycle = 6;
+  state.resources[resource] = amount;
+  const preview = previewCycle(state, NOMINAL_STANDBY_NORMAL);
+  expect(preview.survivalWarning?.code).toBe(code);
+  expect(preview.validation.valid).toBe(true);
+  expect(advanceCycle(state, NOMINAL_STANDBY_NORMAL).failure?.code).toBe(code);
+});
+
+it('no muestra warning cuando alcanza consumo basal', () => {
+  expect(previewCycle(createInitialState(), NOMINAL_STANDBY_NORMAL).survivalWarning).toBeNull();
+});

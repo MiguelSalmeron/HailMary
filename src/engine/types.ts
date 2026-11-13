@@ -31,6 +31,7 @@ export interface ValidationResult {
 }
 
 export interface CyclePreview {
+  survivalWarning: FailureDetails | null;
   decision: CycleDecision;
   validation: ValidationResult;
   projected: Resources;
