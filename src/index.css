@@ -87,3 +87,10 @@ footer { border-top: 1px solid #334155; padding-top: 24px; color: #94a3b8; font-
 .error-boundary { max-width: 720px; margin: 48px auto; padding: 24px; }
 
 .mission-error { padding: 16px; border: 1px solid #fda4af; background: #290e1b; color: #fecdd3; }
+
+.resource-chart-scroll { overflow-x: auto; max-width: 100%; }
+.resource-chart-scroll svg { display: block; width: 100%; min-width: 940px; }
+.assessments .debrief-rating-optimal { color: #67e8f9; }
+.assessments .debrief-rating-adequate { color: #fcd34d; }
+.assessments .debrief-rating-critical { color: #fda4af; }
+.mission-last-result { color: #cbd5e1; margin-top: 20px; }
