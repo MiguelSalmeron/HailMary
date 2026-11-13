@@ -1,4 +1,4 @@
-import type { NasaSource, RadiationLevel, Resources } from '../engine/types';
+import type { NasaSource, RadiationLevel, ResourceKey, Resources } from '../engine/types';
 
 export const TOTAL_CYCLES = 7;
 export const MAX_CAPACITY = 100;
@@ -12,6 +12,14 @@ export const INITIAL_RESOURCES: Resources = {
   food: 44,
   energy: 70,
   exposure: 0,
+};
+
+export const RESOURCE_LABELS: Record<ResourceKey, string> = {
+  oxygen: 'Oxígeno',
+  water: 'Agua',
+  food: 'Alimentos',
+  energy: 'Energía',
+  exposure: 'Exposición',
 };
 
 export const END_THRESHOLDS = {

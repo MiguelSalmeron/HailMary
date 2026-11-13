@@ -1,12 +1,14 @@
 import { describe, expect, it } from 'vitest';
 import {
   advanceCycle,
+  buildCounterfactual,
   buildDebrief,
   createInitialState,
+  getCycleBreakdown,
   previewCycle,
   validateDecision,
 } from './simulation';
-import type { CycleDecision } from './types';
+import type { CycleDecision, SimulationState } from './types';
 import { loadSession, saveSession, type StorageAdapter } from '../storage/persistence';
 
 const NOMINAL_STANDBY_NORMAL: CycleDecision = {
@@ -265,4 +267,53 @@ it.each([
 
 it('no muestra warning cuando alcanza consumo basal', () => {
   expect(previewCycle(createInitialState(), NOMINAL_STANDBY_NORMAL).survivalWarning).toBeNull();
+});
+
+it('desglosa el balance del ciclo y coincide con la proyección del motor', () => {
+  const cases: Array<[SimulationState, CycleDecision]> = [
+    [createInitialState(), NOMINAL_STANDBY_NORMAL],
+    [createInitialState(), { eclss: 'intensive', greenhouse: 'active', protection: 'normal' }],
+    [
+      { ...createInitialState(), cycle: 5, cropProgress: 1, resources: { oxygen: 40, water: 60, food: 20, energy: 55, exposure: 20 } },
+      { eclss: 'nominal', greenhouse: 'active', protection: 'normal' },
+    ],
+  ];
+
+  for (const [state, decision] of cases) {
+    const preview = previewCycle(state, decision);
+    const breakdown = getCycleBreakdown(state, decision);
+    for (const row of breakdown.rows) {
+      expect(row.end).toBe(preview.projected[row.key]);
+      expect(row.net).toBe(row.end - row.start);
+    }
+    expect(breakdown.willHarvest).toBe(preview.willHarvest);
+  }
+
+  const harvest = getCycleBreakdown(cases[2][0], cases[2][1]);
+  expect(harvest.rows.find((row) => row.key === 'food')?.harvest).toBe(32);
+  expect(harvest.willHarvest).toBe(true);
+});
+
+it('verifica con el motor el contrafactual de operar sin refugio en el ciclo 4', () => {
+  const plan: CycleDecision[] = [
+    { eclss: 'nominal', greenhouse: 'standby', protection: 'normal' },
+    { eclss: 'intensive', greenhouse: 'standby', protection: 'normal' },
+    { eclss: 'nominal', greenhouse: 'active', protection: 'normal' },
+    { eclss: 'nominal', greenhouse: 'standby', protection: 'shelter' },
+    { eclss: 'nominal', greenhouse: 'active', protection: 'normal' },
+    { eclss: 'nominal', greenhouse: 'standby', protection: 'normal' },
+    { eclss: 'nominal', greenhouse: 'standby', protection: 'normal' },
+  ];
+
+  let state = createInitialState();
+  for (const decision of plan) state = advanceCycle(state, decision);
+  expect(state.status).toBe('victory');
+
+  const counterfactual = buildCounterfactual(state, 4, { protection: 'normal' });
+  expect(counterfactual).not.toBeNull();
+  expect(counterfactual?.alternative.status).toBe('failed');
+  expect(counterfactual?.alternative.failureCode).toBe('radiation_exceeded');
+  expect(counterfactual?.alternative.exposure).toBe(44);
+  expect(counterfactual?.differs).toBe(true);
+  expect(buildCounterfactual(state, 4, { protection: 'shelter' })).toBeNull();
 });

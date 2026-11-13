@@ -43,6 +43,42 @@ export interface CyclePreview {
   radiationLevel: RadiationLevel;
 }
 
+export interface CycleBreakdownEntry {
+  key: ResourceKey;
+  start: number;
+  solar: number;
+  crew: number;
+  eclss: number;
+  greenhouse: number;
+  protection: number;
+  harvest: number;
+  radiation: number;
+  end: number;
+  net: number;
+}
+
+export interface CycleBreakdown {
+  cycle: number;
+  rows: CycleBreakdownEntry[];
+  willHarvest: boolean;
+  survivalWarning: FailureDetails | null;
+}
+
+export interface CounterfactualOutcome {
+  status: MissionStatus;
+  exposure: number;
+  failureCode: FailureCode | null;
+  cyclesCompleted: number;
+}
+
+export interface CounterfactualResult {
+  cycle: number;
+  summary: string;
+  actual: CounterfactualOutcome;
+  alternative: CounterfactualOutcome;
+  differs: boolean;
+}
+
 export interface CycleLogEntry {
   cycle: number;
   decision: CycleDecision;

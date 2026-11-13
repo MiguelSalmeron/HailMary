@@ -13,6 +13,9 @@ import {
   TOTAL_CYCLES,
 } from '../data/scenario';
 import type {
+  CounterfactualResult,
+  CycleBreakdown,
+  CycleBreakdownEntry,
   CycleDecision,
   CycleLogEntry,
   CyclePreview,
@@ -287,6 +290,64 @@ export function previewCycle(state: SimulationState, decision: CycleDecision): C
   };
 }
 
+export function getCycleBreakdown(
+  state: SimulationState,
+  decision: CycleDecision
+): CycleBreakdown {
+  const sim = simulateSteps(state, decision);
+  const start = state.resources;
+  const energyAfterSolar = Math.min(MAX_CAPACITY, start.energy + sim.solarGeneration);
+  const eclss = SUBSYSTEM_EFFECTS.eclss[decision.eclss];
+  const greenhouse = SUBSYSTEM_EFFECTS.greenhouse[decision.greenhouse];
+  const protection = SUBSYSTEM_EFFECTS.protection[decision.protection];
+  const harvested = !sim.crewSurvivalFailure && sim.harvested;
+  const harvestFood = harvested
+    ? sim.afterProductionAndRadiation.food - clampCapacity(sim.afterSubsystems.food)
+    : 0;
+  const end = sim.crewSurvivalFailure
+    ? {
+        oxygen: Math.max(0, sim.afterSolarAndCrew.oxygen),
+        water: Math.max(0, sim.afterSolarAndCrew.water),
+        food: Math.max(0, sim.afterSolarAndCrew.food),
+        energy: Math.max(0, sim.afterSolarAndCrew.energy),
+        exposure: start.exposure,
+      }
+    : sim.afterProductionAndRadiation;
+
+  const rows: CycleBreakdownEntry[] = (
+    ['oxygen', 'water', 'food', 'energy', 'exposure'] as const
+  ).map((key) => {
+    const solar = key === 'energy' ? energyAfterSolar - start.energy : 0;
+    const crew = key === 'exposure' ? 0 : CREW_CONSUMPTION[key];
+    const eclssDelta = key === 'exposure' ? 0 : eclss[key];
+    const greenhouseDelta = key === 'exposure' ? 0 : greenhouse[key];
+    const protectionDelta = key === 'exposure' ? 0 : protection[key];
+    const harvest = key === 'food' ? harvestFood : 0;
+    const radiation = key === 'exposure' && !sim.crewSurvivalFailure ? sim.radiationDelta : 0;
+
+    return {
+      key,
+      start: start[key],
+      solar,
+      crew,
+      eclss: eclssDelta,
+      greenhouse: greenhouseDelta,
+      protection: protectionDelta,
+      harvest,
+      radiation,
+      end: end[key],
+      net: end[key] - start[key],
+    };
+  });
+
+  return {
+    cycle: state.cycle,
+    rows,
+    willHarvest: harvested,
+    survivalWarning: sim.crewSurvivalFailure,
+  };
+}
+
 export function evaluateOutcome(
   resources: Resources,
   cycle: number,
@@ -499,6 +560,68 @@ export function advanceCycle(state: SimulationState, decision: CycleDecision): S
     status: outcome.status,
     failure: outcome.failure,
     history: [...state.history, entry],
+  };
+}
+
+function sameDecision(a: CycleDecision, b: CycleDecision): boolean {
+  return a.eclss === b.eclss && a.greenhouse === b.greenhouse && a.protection === b.protection;
+}
+
+export function buildCounterfactual(
+  state: SimulationState,
+  cycle: number,
+  patch: Partial<CycleDecision>
+): CounterfactualResult | null {
+  const target = state.history.find((entry) => entry.cycle === cycle);
+  if (!target) return null;
+
+  const changed: CycleDecision = { ...target.decision, ...patch };
+  if (sameDecision(changed, target.decision)) return null;
+
+  let replay = createInitialState(state.attemptNumber);
+  try {
+    for (const entry of state.history) {
+      if (replay.status !== 'in_progress') break;
+      const decision = entry.cycle === cycle ? changed : entry.decision;
+      replay = advanceCycle(replay, decision);
+    }
+  } catch {
+    return null;
+  }
+
+  const alternative = {
+    status: replay.status,
+    exposure: replay.resources.exposure,
+    failureCode: replay.failure?.code ?? null,
+    cyclesCompleted: replay.history.length,
+  };
+  const actual = {
+    status: state.status,
+    exposure: state.resources.exposure,
+    failureCode: state.failure?.code ?? null,
+    cyclesCompleted: state.history.length,
+  };
+
+  let summary: string;
+  if (alternative.status === 'victory') {
+    summary = `La variante habría completado la misión con ${alternative.exposure} u de exposición.`;
+  } else if (alternative.failureCode === 'radiation_exceeded') {
+    summary = `La variante habría superado el límite de exposición: ${alternative.exposure} u y fallo en el ciclo ${cycle}.`;
+  } else if (alternative.failureCode) {
+    summary = `La variante habría fallado por ${alternative.failureCode} en el ciclo ${cycle}.`;
+  } else {
+    summary = 'La variante no habría cambiado el resultado de la misión.';
+  }
+
+  return {
+    cycle,
+    summary,
+    actual,
+    alternative,
+    differs:
+      alternative.status !== actual.status ||
+      alternative.exposure !== actual.exposure ||
+      alternative.failureCode !== actual.failureCode,
   };
 }
 

@@ -6,7 +6,7 @@ interface SubsystemControlsProps {
   cropProgress: number;
   cycle: number;
   validation: ValidationResult;
-  onChange: (next: CycleDecision) => void;
+  onChange: (patch: Partial<CycleDecision>) => void;
 }
 
 export function SubsystemControls({
@@ -46,7 +46,7 @@ export function SubsystemControls({
           <div className="mt-3.5 space-y-2">
             <button
               type="button"
-              onClick={() => onChange({ ...decision, eclss: 'nominal' })}
+              onClick={() => onChange({ eclss: 'nominal' })}
               aria-pressed={decision.eclss === 'nominal'}
               className={`w-full rounded-md border px-3 py-2.5 text-left transition-colors focus-visible:outline-2 focus-visible:outline-cyan-400 ${
                 decision.eclss === 'nominal'
@@ -63,7 +63,7 @@ export function SubsystemControls({
 
             <button
               type="button"
-              onClick={() => onChange({ ...decision, eclss: 'intensive' })}
+              onClick={() => onChange({ eclss: 'intensive' })}
               aria-pressed={decision.eclss === 'intensive'}
               className={`w-full rounded-md border px-3 py-2.5 text-left transition-colors focus-visible:outline-2 focus-visible:outline-cyan-400 ${
                 decision.eclss === 'intensive'
@@ -102,7 +102,7 @@ export function SubsystemControls({
           <div className="mt-3.5 space-y-2">
             <button
               type="button"
-              onClick={() => onChange({ ...decision, greenhouse: 'standby' })}
+              onClick={() => onChange({ greenhouse: 'standby' })}
               aria-pressed={decision.greenhouse === 'standby'}
               className={`w-full rounded-md border px-3 py-2.5 text-left transition-colors focus-visible:outline-2 focus-visible:outline-cyan-400 ${
                 decision.greenhouse === 'standby'
@@ -123,7 +123,7 @@ export function SubsystemControls({
 
             <button
               type="button"
-              onClick={() => onChange({ ...decision, greenhouse: 'active' })}
+              onClick={() => onChange({ greenhouse: 'active' })}
               aria-pressed={decision.greenhouse === 'active'}
               className={`w-full rounded-md border px-3 py-2.5 text-left transition-colors focus-visible:outline-2 focus-visible:outline-cyan-400 ${
                 decision.greenhouse === 'active'
@@ -175,7 +175,7 @@ export function SubsystemControls({
           <div className="mt-3.5 space-y-2">
             <button
               type="button"
-              onClick={() => onChange({ ...decision, protection: 'normal' })}
+              onClick={() => onChange({ protection: 'normal' })}
               aria-pressed={decision.protection === 'normal'}
               className={`w-full rounded-md border px-3 py-2.5 text-left transition-colors focus-visible:outline-2 focus-visible:outline-cyan-400 ${
                 decision.protection === 'normal'
@@ -196,7 +196,7 @@ export function SubsystemControls({
 
             <button
               type="button"
-              onClick={() => onChange({ ...decision, protection: 'shelter' })}
+              onClick={() => onChange({ protection: 'shelter' })}
               aria-pressed={decision.protection === 'shelter'}
               className={`w-full rounded-md border px-3 py-2.5 text-left transition-colors focus-visible:outline-2 focus-visible:outline-cyan-400 ${
                 decision.protection === 'shelter'

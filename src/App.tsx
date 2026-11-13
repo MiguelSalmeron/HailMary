@@ -18,7 +18,10 @@ export default function App() {
   useEffect(() => () => { if (unlockTimer.current) clearTimeout(unlockTimer.current); }, []);
   const main = useRef<HTMLElement>(null);
   useEffect(() => { saveSession(session); }, [session]);
-  useEffect(() => { main.current?.focus(); }, [session.phase, session.simulation.cycle]);
+  useEffect(() => {
+    main.current?.focus({ preventScroll: true });
+    window.scrollTo(0, 0);
+  }, [session.phase, session.simulation.cycle]);
 
   function execute(decision: CycleDecision) {
     if (executing.current) return;
@@ -69,6 +72,11 @@ export default function App() {
               ...session,
               phase: session.simulation.status === 'in_progress' ? 'mission' : 'debrief',
             }) : undefined}
+            continueLabel={
+              session.simulation.status === 'in_progress'
+                ? 'Continuar misión guardada'
+                : 'Ver debrief del último intento'
+            }
           />
         ) : session.phase === 'mission' ? (
           <MissionControl

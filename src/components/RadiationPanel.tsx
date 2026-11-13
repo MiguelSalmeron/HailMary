@@ -17,6 +17,7 @@ export function RadiationPanel({
 }: RadiationPanelProps) {
   const context = CYCLE_CONTEXT[cycle];
   const level = context.radiationLevel;
+  const isStormWindow = cycle === 3 || cycle === 4;
 
   const badgeStyle =
     level === 'solar_event'
@@ -98,50 +99,58 @@ export function RadiationPanel({
         </div>
       </div>
 
-      {/* Comparativa visual de riesgo con/sin refugio */}
-      <div className="mt-3 rounded border border-slate-800/80 bg-[#060B14]/60 p-3 space-y-2">
-        <div className="flex items-center justify-between text-xs text-slate-300">
-          <span>Comparativa ilustrativa en este ciclo (Límite seguro: {MAX_EXPOSURE} u)</span>
-        </div>
-        <div className="space-y-1.5 text-xs">
-          <div>
-            <div className="flex justify-between text-slate-400 font-mono-tabular mb-0.5">
-              <span>Con Operación Normal</span>
-              <span>{exposure + (cycle === 4 ? 35 : 3)} u</span>
+      {isStormWindow ? (
+        <>
+          <div className="mt-3 rounded border border-slate-800/80 bg-[#060B14]/60 p-3 space-y-2">
+            <div className="flex items-center justify-between text-xs text-slate-300">
+              <span>Comparativa ilustrativa en este ciclo (Límite seguro: {MAX_EXPOSURE} u)</span>
             </div>
-            <div className="h-1.5 w-full rounded-full bg-slate-800 overflow-hidden">
-              <div
-                className={`h-full ${cycle === 4 ? 'bg-rose-500' : 'bg-slate-400'}`}
-                style={{ width: `${withoutShelterPct}%` }}
-              />
+            <div className="space-y-1.5 text-xs">
+              <div>
+                <div className="flex justify-between text-slate-400 font-mono-tabular mb-0.5">
+                  <span>Con Operación Normal</span>
+                  <span>{exposure + (cycle === 4 ? 35 : 3)} u</span>
+                </div>
+                <div className="h-1.5 w-full rounded-full bg-slate-800 overflow-hidden">
+                  <div
+                    className={`h-full ${cycle === 4 ? 'bg-rose-500' : 'bg-slate-400'}`}
+                    style={{ width: `${withoutShelterPct}%` }}
+                  />
+                </div>
+              </div>
+              <div>
+                <div className="flex justify-between text-slate-400 font-mono-tabular mb-0.5">
+                  <span>Con Protocolo Refugio</span>
+                  <span>{exposure + (cycle === 4 ? 8 : 3)} u</span>
+                </div>
+                <div className="h-1.5 w-full rounded-full bg-slate-800 overflow-hidden">
+                  <div className="h-full bg-emerald-400" style={{ width: `${withShelterPct}%` }} />
+                </div>
+              </div>
             </div>
           </div>
-          <div>
-            <div className="flex justify-between text-slate-400 font-mono-tabular mb-0.5">
-              <span>Con Protocolo Refugio</span>
-              <span>{exposure + (cycle === 4 ? 8 : 3)} u</span>
-            </div>
-            <div className="h-1.5 w-full rounded-full bg-slate-800 overflow-hidden">
-              <div className="h-full bg-emerald-400" style={{ width: `${withShelterPct}%` }} />
-            </div>
-          </div>
-        </div>
-      </div>
 
-      <p className="mt-3 text-xs leading-relaxed text-slate-400">
-        Las partículas energéticas solares pueden aumentar el riesgo de radiación. Los refugios y
-        materiales apropiados reducen parte de la exposición, pero la protección depende del tipo y
-        energía de la radiación.{' '}
-        <a
-          href={NASA_SOURCES.shielding.url}
-          target="_blank"
-          rel="noreferrer"
-          className="inline-flex items-center gap-1 text-cyan-300 hover:text-cyan-200 underline underline-offset-2"
-        >
-          NASA Langley Shielding
-          <ExternalLink className="h-3 w-3" />
-        </a>
-      </p>
+          <p className="mt-3 text-xs leading-relaxed text-slate-400">
+            Las partículas energéticas solares pueden aumentar el riesgo de radiación. Los refugios y
+            materiales apropiados reducen parte de la exposición, pero la protección depende del tipo y
+            energía de la radiación.{' '}
+            <a
+              href={NASA_SOURCES.shielding.url}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1 text-cyan-300 hover:text-cyan-200 underline underline-offset-2"
+            >
+              NASA Langley Shielding
+              <ExternalLink className="h-3 w-3" />
+            </a>
+          </p>
+        </>
+      ) : (
+        <p className="mt-3 text-xs leading-relaxed text-slate-400">
+          Sin eventos solares previstos. La exposición de fondo suma +3 u por ciclo; el límite
+          didáctico es {MAX_EXPOSURE} u.
+        </p>
+      )}
     </section>
   );
 }
