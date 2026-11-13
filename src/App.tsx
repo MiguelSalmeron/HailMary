@@ -1,13 +1,15 @@
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import type { CycleDecision } from './engine/types';
 import { createInitialState, advanceCycle } from './engine/simulation';
 import { loadSession, saveSession, type PersistedSession } from './storage/persistence';
+import { RecoveryContext } from './components/ErrorBoundary';
 import { BriefingScreen } from './components/BriefingScreen';
 import { MissionControl } from './components/MissionControl';
 import { DebriefScreen } from './components/DebriefScreen';
 
 export default function App() {
-  const [session, setSession] = useState<PersistedSession>(() => loadSession() ?? {
+  const recovered = useContext(RecoveryContext);
+  const [session, setSession] = useState<PersistedSession>(() => (recovered ? null : loadSession()) ?? {
     phase: 'briefing',
     simulation: createInitialState(),
     previousAttempts: [],
