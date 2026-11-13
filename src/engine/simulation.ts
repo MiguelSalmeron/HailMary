@@ -680,7 +680,7 @@ export function buildDebrief(state: SimulationState): DebriefReport {
         ? `En el Ciclo 4 elegiste ${cycle4Entry.decision.protection === 'shelter' ? 'Protocolo Refugio (+8 u)' : 'Operación Normal (+35 u)'}. Exposición total: ${state.resources.exposure} u.`
         : `La misión concluyó antes del Ciclo 4 con ${state.resources.exposure} u de exposición acumulada.`,
       scientificExplanation:
-        'Las partículas energéticas solares aumentan el riesgo de radiación de forma abrupta. Los refugios reducen la exposición (nunca a 0 %, debido a la radiación cósmica de fondo y penetración de partículas), a costa de restringir energía operativa.',
+        'Un evento SPE aumenta la exposición de forma abrupta. El refugio la reduce parcialmente; la radiación galáctica de fondo (GCR) permanece. Los valores son unidades didácticas, no dosis médicas; el intercambio es energía operativa.',
       source: NASA_SOURCES.shielding,
     },
   ];

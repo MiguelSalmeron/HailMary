@@ -80,7 +80,7 @@ export const CYCLE_CONTEXT: Record<number, CycleContextInfo> = {
     briefing:
       'Lunar Outpost Alpha inicia operaciones nominales con dos tripulantes. Supervisá el consumo basal y evaluá cuándo iniciar la producción agrícola.',
     radiationLevel: 'background',
-    radiationForecast: 'Radiación cósmica de fondo estable (+3 u/ciclo).',
+    radiationForecast: 'Radiación GCR de fondo estable (+3 u/ciclo).',
     solarOutput: SOLAR_GENERATION.normal,
   },
   2: {
@@ -89,7 +89,7 @@ export const CYCLE_CONTEXT: Record<number, CycleContextInfo> = {
     briefing:
       'La tripulación consume reservas de forma continua. Producir oxígeno por electrólisis intensiva consume agua y energía que también requiere el invernadero.',
     radiationLevel: 'background',
-    radiationForecast: 'Radiación cósmica de fondo estable (+3 u/ciclo).',
+    radiationForecast: 'Radiación GCR de fondo estable (+3 u/ciclo).',
     solarOutput: SOLAR_GENERATION.normal,
   },
   3: {
@@ -98,7 +98,7 @@ export const CYCLE_CONTEXT: Record<number, CycleContextInfo> = {
     briefing:
       'Sensores heliogeofísicos detectan una eyección solar dirigida al entorno lunar para el Ciclo 4. Asegurá reservas de oxígeno y energía antes de activar el refugio.',
     radiationLevel: 'elevated',
-    radiationForecast: 'ALERTA: Evento de partículas solares previsto para el Ciclo 4.',
+    radiationForecast: 'ALERTA: Evento SPE previsto para el Ciclo 4.',
     solarOutput: SOLAR_GENERATION.normal,
     alertTag: 'ALERTA TEMPRANA SOLAR',
   },
@@ -108,7 +108,7 @@ export const CYCLE_CONTEXT: Record<number, CycleContextInfo> = {
     briefing:
       'Tormenta de partículas solares activa sobre el polo sur lunar. Activar el Protocolo Refugio reduce drásticamente la exposición (+8 u vs +35 u), pero restringe la energía operativa.',
     radiationLevel: 'solar_event',
-    radiationForecast: 'TORMENTA ACTIVA: +35 u sin refugio / +8 u en Protocolo Refugio.',
+    radiationForecast: 'SPE ACTIVA: +35 u sin refugio / +8 u en Protocolo Refugio.',
     solarOutput: SOLAR_GENERATION.normal,
     alertTag: 'EVENTO SOLAR CRÍTICO',
   },
@@ -118,7 +118,7 @@ export const CYCLE_CONTEXT: Record<number, CycleContextInfo> = {
     briefing:
       'El flujo de partículas retorna a niveles de fondo. Si iniciaste el cultivo previamente, podés completar el segundo ciclo activo para cosechar 32 u de alimentos.',
     radiationLevel: 'background',
-    radiationForecast: 'Radiación cósmica de fondo estable (+3 u/ciclo).',
+    radiationForecast: 'Radiación GCR de fondo estable (+3 u/ciclo).',
     solarOutput: SOLAR_GENERATION.normal,
   },
   6: {
@@ -127,7 +127,7 @@ export const CYCLE_CONTEXT: Record<number, CycleContextInfo> = {
     briefing:
       'Desconexión parcial programada en los paneles solares: la generación cae de +19 u a +7 u en este ciclo. Administrá tus reservas acumuladas con prudencia.',
     radiationLevel: 'background',
-    radiationForecast: 'Radiación cósmica de fondo estable (+3 u/ciclo).',
+    radiationForecast: 'Radiación GCR de fondo estable (+3 u/ciclo).',
     solarOutput: SOLAR_GENERATION.cycle6Maintenance,
     alertTag: 'GENERACIÓN SOLAR REDUCIDA (+7 u)',
   },
@@ -137,7 +137,7 @@ export const CYCLE_CONTEXT: Record<number, CycleContextInfo> = {
     briefing:
       'Último ciclo de la misión. Al concluir, Lunar Outpost Alpha debe mantener al menos 15 O₂, 15 Agua, 8 Alimentos, 10 Energía y un índice de exposición <= 40.',
     radiationLevel: 'background',
-    radiationForecast: 'Radiación cósmica de fondo estable (+3 u/ciclo).',
+    radiationForecast: 'Radiación GCR de fondo estable (+3 u/ciclo).',
     solarOutput: SOLAR_GENERATION.normal,
   },
 };

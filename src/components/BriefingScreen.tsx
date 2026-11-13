@@ -88,7 +88,7 @@ export function BriefingScreen({
               </div>
               <div>
                 <dt>Radiación</dt>
-                <dd>Tormenta en ciclo 4: +35 u sin refugio, +8 u con refugio. Límite: 40 u.</dd>
+                <dd>Evento SPE en ciclo 4: +35 u sin refugio, +8 u con refugio. Límite: 40 u (GCR de fondo: +3 u/ciclo).</dd>
               </div>
             </dl>
           </div>

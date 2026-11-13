@@ -28,10 +28,10 @@ export function RadiationPanel({
 
   const levelLabel =
     level === 'solar_event'
-      ? 'Solar Event (SPE Activo)'
+      ? 'Evento SPE (partículas solares)'
       : level === 'elevated'
-        ? 'Elevated (Alerta Temprana)'
-        : 'Background (Cósmica de Fondo)';
+        ? 'Alerta temprana (pre-SPE)'
+        : 'GCR (radiación galáctica de fondo)';
 
   const withoutShelterPct = Math.min(100, ((exposure + (cycle === 4 ? 35 : 3)) / MAX_EXPOSURE) * 100);
   const withShelterPct = Math.min(100, ((exposure + (cycle === 4 ? 8 : 3)) / MAX_EXPOSURE) * 100);
@@ -131,9 +131,9 @@ export function RadiationPanel({
           </div>
 
           <p className="mt-3 text-xs leading-relaxed text-slate-400">
-            Las partículas energéticas solares pueden aumentar el riesgo de radiación. Los refugios y
-            materiales apropiados reducen parte de la exposición, pero la protección depende del tipo y
-            energía de la radiación.{' '}
+            Las partículas energéticas solares (SPE) aumentan la exposición de forma abrupta. El refugio
+            mitiga parte del evento, pero la radiación galáctica de fondo (GCR) sigue presente; los
+            valores son unidades didácticas, no dosis médicas.{' '}
             <a
               href={NASA_SOURCES.shielding.url}
               target="_blank"

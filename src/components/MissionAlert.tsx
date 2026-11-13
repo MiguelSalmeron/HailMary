@@ -19,9 +19,9 @@ export function MissionAlert({ cycle }: { cycle: number }) {
         <strong>{context.alertTag}</strong>
         <p>
           {isStorm
-            ? 'Protocolo Refugio: −10 u de energía y exposición +8 u. Sin refugio: +35 u y riesgo de fallo.'
+            ? 'Evento SPE: el refugio cuesta −10 u de energía y reduce la exposición a +8 u; sin refugio: +35 u y riesgo de fallo.'
             : cycle === 3
-              ? 'Prepará el Ciclo 4: reservá al menos 10 u de energía para el refugio y margen de O₂ y alimentos.'
+              ? 'Preparación para el SPE del Ciclo 4: reservá al menos 10 u de energía para el refugio y margen de O₂ y alimentos.'
               : 'La generación solar cae a +7 u. Administrá las reservas acumuladas para el cierre.'}
         </p>
       </div>

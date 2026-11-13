@@ -36,7 +36,7 @@ Orden: Solar → consumo basal → supervivencia inmediata → subsistemas → c
 | Cultivo activo | −7 agua, −13 energía; segundo ciclo activo: +32 alimentos |
 | Latencia | −2 energía; conserva progreso |
 | Refugio | −10 energía |
-| Radiación | +3; ciclo 4: +35 normal o +8 refugio |
+| Radiación | GCR de fondo +3; ciclo 4 evento SPE: +35 normal o +8 refugio |
 | Combinación bloqueada | Refugio + electrólisis intensiva + cultivo activo |
 | Cierre ciclo 7 | O₂ ≥15, agua ≥15, alimentos ≥8, energía ≥10, exposición ≤40 |
 
