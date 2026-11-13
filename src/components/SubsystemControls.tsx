@@ -32,13 +32,13 @@ export function SubsystemControls({
 
       <div className="grid grid-cols-1 gap-3.5 md:grid-cols-3">
         {/* 1. Soporte Vital (ECLSS) */}
-        <div className="rounded-lg border border-slate-800 bg-[#0B1220] p-4 flex flex-col justify-between">
+        <div className="rounded border border-[#526480] bg-[#0B1220] p-4 flex flex-col justify-between">
           <div>
             <div className="flex items-center gap-2 text-slate-100">
               <Wind className="h-4 w-4 text-cyan-400" strokeWidth={1.75} />
               <h3 className="text-sm font-semibold">1. Soporte Vital (ECLSS)</h3>
             </div>
-            <p className="mt-1.5 text-xs leading-relaxed text-slate-400">
+            <p className="mt-1.5 text-[13px] leading-relaxed text-slate-400">
               Controla el reciclaje de agua y la generación de oxígeno para la tripulación.
             </p>
           </div>
@@ -48,15 +48,15 @@ export function SubsystemControls({
               type="button"
               onClick={() => onChange({ eclss: 'nominal' })}
               aria-pressed={decision.eclss === 'nominal'}
-              className={`w-full rounded-md border px-3 py-2.5 text-left transition-colors focus-visible:outline-2 focus-visible:outline-cyan-400 ${
+              className={`w-full rounded border px-3 py-2.5 text-left transition-colors focus-visible:outline-2 focus-visible:outline-cyan-400 ${
                 decision.eclss === 'nominal'
                   ? 'border-cyan-400/70 bg-cyan-950/35 text-slate-50'
-                  : 'border-slate-800 bg-[#111A2E]/60 text-slate-300 hover:border-slate-700'
+                  : 'border-[#526480] bg-[#111A2E]/60 text-slate-300 hover:border-cyan-400/70'
               }`}
             >
               <div className="flex items-center justify-between">
                 <span className="text-sm font-medium">Reciclaje Nominal</span>
-                <span className="text-xs font-mono-tabular text-cyan-300">+4 O₂ · +3 Agua</span>
+                <span className="text-xs font-mono-tabular text-emerald-300">+4 O₂ · +3 Agua</span>
               </div>
               <div className="mt-0.5 text-xs font-mono-tabular text-slate-400">Costo: -9 Energía</div>
             </button>
@@ -65,10 +65,10 @@ export function SubsystemControls({
               type="button"
               onClick={() => onChange({ eclss: 'intensive' })}
               aria-pressed={decision.eclss === 'intensive'}
-              className={`w-full rounded-md border px-3 py-2.5 text-left transition-colors focus-visible:outline-2 focus-visible:outline-cyan-400 ${
+              className={`w-full rounded border px-3 py-2.5 text-left transition-colors focus-visible:outline-2 focus-visible:outline-cyan-400 ${
                 decision.eclss === 'intensive'
                   ? 'border-cyan-400/70 bg-cyan-950/35 text-slate-50'
-                  : 'border-slate-800 bg-[#111A2E]/60 text-slate-300 hover:border-slate-700'
+                  : 'border-[#526480] bg-[#111A2E]/60 text-slate-300 hover:border-cyan-400/70'
               }`}
             >
               <div className="flex items-center justify-between">
@@ -83,7 +83,7 @@ export function SubsystemControls({
         </div>
 
         {/* 2. Invernadero Lunar */}
-        <div className="rounded-lg border border-slate-800 bg-[#0B1220] p-4 flex flex-col justify-between">
+        <div className="rounded border border-[#526480] bg-[#0B1220] p-4 flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between gap-2">
               <div className="flex items-center gap-2 text-slate-100">
@@ -94,7 +94,7 @@ export function SubsystemControls({
                 Progreso: {cropProgress}/2
               </span>
             </div>
-            <p className="mt-1.5 text-xs leading-relaxed text-slate-400">
+            <p className="mt-1.5 text-[13px] leading-relaxed text-slate-400">
               Requiere 2 ciclos activos para cosechar +32 u de alimentos. En espera conserva el progreso.
             </p>
           </div>
@@ -104,10 +104,10 @@ export function SubsystemControls({
               type="button"
               onClick={() => onChange({ greenhouse: 'standby' })}
               aria-pressed={decision.greenhouse === 'standby'}
-              className={`w-full rounded-md border px-3 py-2.5 text-left transition-colors focus-visible:outline-2 focus-visible:outline-cyan-400 ${
+              className={`w-full rounded border px-3 py-2.5 text-left transition-colors focus-visible:outline-2 focus-visible:outline-cyan-400 ${
                 decision.greenhouse === 'standby'
                   ? 'border-cyan-400/70 bg-cyan-950/35 text-slate-50'
-                  : 'border-slate-800 bg-[#111A2E]/60 text-slate-300 hover:border-slate-700'
+                  : 'border-[#526480] bg-[#111A2E]/60 text-slate-300 hover:border-cyan-400/70'
               }`}
             >
               <div className="flex items-center justify-between">
@@ -125,10 +125,10 @@ export function SubsystemControls({
               type="button"
               onClick={() => onChange({ greenhouse: 'active' })}
               aria-pressed={decision.greenhouse === 'active'}
-              className={`w-full rounded-md border px-3 py-2.5 text-left transition-colors focus-visible:outline-2 focus-visible:outline-cyan-400 ${
+              className={`w-full rounded border px-3 py-2.5 text-left transition-colors focus-visible:outline-2 focus-visible:outline-cyan-400 ${
                 decision.greenhouse === 'active'
                   ? 'border-cyan-400/70 bg-cyan-950/35 text-slate-50'
-                  : 'border-slate-800 bg-[#111A2E]/60 text-slate-300 hover:border-slate-700'
+                  : 'border-[#526480] bg-[#111A2E]/60 text-slate-300 hover:border-cyan-400/70'
               }`}
             >
               <div className="flex items-center justify-between">
@@ -146,10 +146,10 @@ export function SubsystemControls({
 
         {/* 3. Protección y Operaciones */}
         <div
-          className={`rounded-lg border p-4 flex flex-col justify-between ${
+          className={`rounded border p-4 flex flex-col justify-between ${
             isStormCycle
               ? 'border-amber-500/50 bg-[#131420]'
-              : 'border-slate-800 bg-[#0B1220]'
+              : 'border-[#526480] bg-[#0B1220]'
           }`}
         >
           <div>
@@ -162,12 +162,12 @@ export function SubsystemControls({
                 <h3 className="text-sm font-semibold">3. Protección y Operaciones</h3>
               </div>
               {(isStormCycle || isEarlyWarning) && (
-                <span className="rounded bg-amber-500/20 px-2 py-0.5 text-[11px] font-medium text-amber-300">
+                <span className="rounded bg-amber-500/20 px-2 py-0.5 text-xs font-medium text-amber-300">
                   {isStormCycle ? 'TORMENTA' : 'ALERTA C4'}
                 </span>
               )}
             </div>
-            <p className="mt-1.5 text-xs leading-relaxed text-slate-400">
+            <p className="mt-1.5 text-[13px] leading-relaxed text-slate-400">
               Activar Refugio mitiga tormentas solares, pero reduce margen energético y restringe carga máxima.
             </p>
           </div>
@@ -177,10 +177,10 @@ export function SubsystemControls({
               type="button"
               onClick={() => onChange({ protection: 'normal' })}
               aria-pressed={decision.protection === 'normal'}
-              className={`w-full rounded-md border px-3 py-2.5 text-left transition-colors focus-visible:outline-2 focus-visible:outline-cyan-400 ${
+              className={`w-full rounded border px-3 py-2.5 text-left transition-colors focus-visible:outline-2 focus-visible:outline-cyan-400 ${
                 decision.protection === 'normal'
                   ? 'border-cyan-400/70 bg-cyan-950/35 text-slate-50'
-                  : 'border-slate-800 bg-[#111A2E]/60 text-slate-300 hover:border-slate-700'
+                  : 'border-[#526480] bg-[#111A2E]/60 text-slate-300 hover:border-cyan-400/70'
               }`}
             >
               <div className="flex items-center justify-between">
@@ -198,10 +198,10 @@ export function SubsystemControls({
               type="button"
               onClick={() => onChange({ protection: 'shelter' })}
               aria-pressed={decision.protection === 'shelter'}
-              className={`w-full rounded-md border px-3 py-2.5 text-left transition-colors focus-visible:outline-2 focus-visible:outline-cyan-400 ${
+              className={`w-full rounded border px-3 py-2.5 text-left transition-colors focus-visible:outline-2 focus-visible:outline-cyan-400 ${
                 decision.protection === 'shelter'
-                  ? 'border-amber-400/70 bg-amber-950/35 text-slate-50'
-                  : 'border-slate-800 bg-[#111A2E]/60 text-slate-300 hover:border-slate-700'
+                  ? 'border-cyan-400/70 bg-cyan-950/35 text-slate-50'
+                  : 'border-[#526480] bg-[#111A2E]/60 text-slate-300 hover:border-cyan-400/70'
               }`}
             >
               <div className="flex items-center justify-between">
@@ -221,7 +221,7 @@ export function SubsystemControls({
       {!validation.valid && (
         <div
           role="alert"
-          className="rounded-lg border border-rose-500/50 bg-rose-950/30 p-3.5 text-sm text-rose-200 flex items-start gap-2.5"
+          className="rounded border border-rose-500/50 bg-rose-950/30 p-3.5 text-sm text-rose-200 flex items-start gap-2.5"
         >
           <AlertTriangle className="h-4 w-4 text-rose-400 shrink-0 mt-0.5" />
           <div className="space-y-1">

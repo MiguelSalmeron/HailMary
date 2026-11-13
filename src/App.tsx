@@ -61,7 +61,7 @@ export default function App() {
     <div className="app-shell">
       <header className="brand">
         <strong>NEXUS <span>Último Horizonte</span></strong>
-        <span>Lunar Mission Trainer · V1.0</span>
+        <span>Lunar Mission Trainer · V1.0 · LifePlants</span>
       </header>
       <main ref={main} tabIndex={-1}>
         {executionError && <p className="mission-error" role="alert">{executionError}</p>}

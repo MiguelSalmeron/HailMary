@@ -36,14 +36,14 @@ export function ResourceCard({
   const statusTextColor = insufficient || isCritical
     ? 'text-rose-400'
     : isWarning
-      ? 'text-amber-400'
-      : 'text-cyan-300';
+      ? 'text-amber-300'
+      : 'text-emerald-300';
 
   const barColor = insufficient || isCritical
     ? 'bg-rose-500'
     : isWarning
       ? 'bg-amber-400'
-      : 'bg-cyan-400';
+      : 'bg-emerald-400';
 
   const deltaFormatted = delta > 0 ? `+${delta}` : `${delta}`;
   const deltaColor =
@@ -59,10 +59,10 @@ export function ResourceCard({
 
   return (
     <div
-      className={`rounded-lg border p-3.5 transition-colors ${
+      className={`rounded border p-3.5 transition-colors ${
         insufficient
           ? 'border-rose-500/60 bg-rose-950/20'
-          : 'border-slate-800 bg-[#0B1220]'
+          : 'border-[#526480] bg-[#0B1220]'
       }`}
     >
       <div className="flex items-center justify-between gap-2">
@@ -85,7 +85,7 @@ export function ResourceCard({
 
         <div className="flex items-center gap-1.5 text-xs font-mono-tabular">
           <span className={deltaColor}>{deltaFormatted}</span>
-          <span className="text-slate-500">→</span>
+          <span className="text-slate-400">→</span>
           <span className={`font-semibold ${statusTextColor}`}>{projected}</span>
         </div>
       </div>

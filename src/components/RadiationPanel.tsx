@@ -24,7 +24,7 @@ export function RadiationPanel({
       ? 'bg-rose-500/20 text-rose-300 border-rose-500/40'
       : level === 'elevated'
         ? 'bg-amber-500/20 text-amber-300 border-amber-500/40'
-        : 'bg-slate-800 text-cyan-300 border-slate-700';
+        : 'bg-[#111A2E] text-slate-200 border-[#526480]';
 
   const levelLabel =
     level === 'solar_event'
@@ -39,12 +39,12 @@ export function RadiationPanel({
   return (
     <section
       aria-label="Panel científico de radiación"
-      className={`rounded-lg border p-4 ${
+      className={`rounded border p-4 ${
         level === 'solar_event'
           ? 'border-rose-500/50 bg-[#140E18]'
           : level === 'elevated'
             ? 'border-amber-500/40 bg-[#12131E]'
-            : 'border-slate-800 bg-[#0B1220]'
+            : 'border-[#526480] bg-[#0B1220]'
       }`}
     >
       <div className="flex flex-wrap items-center justify-between gap-2">
@@ -64,36 +64,36 @@ export function RadiationPanel({
       </div>
 
       <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-3 text-xs">
-        <div className="rounded border border-slate-800/90 bg-[#060B14]/70 p-2.5">
+        <div className="rounded border border-[#334155] bg-[#060B14]/70 p-2.5">
           <div className="text-slate-400">Exposición acumulada</div>
           <div className="mt-1 flex items-baseline gap-1.5 font-mono-tabular">
             <span className="text-lg font-semibold text-slate-100">{exposure}</span>
-            <span className="text-slate-500">→</span>
+            <span className="text-slate-400">→</span>
             <span
               className={`font-semibold ${
-                projectedExposure > MAX_EXPOSURE ? 'text-rose-400' : 'text-cyan-300'
+                projectedExposure > MAX_EXPOSURE ? 'text-rose-400' : 'text-emerald-300'
               }`}
             >
               {projectedExposure} u
             </span>
-            <span className="text-slate-500">/ {MAX_EXPOSURE} máx</span>
+            <span className="text-slate-400">/ {MAX_EXPOSURE} máx</span>
           </div>
-          <div className="mt-1 text-[11px] text-slate-400">Índice didáctico de simulación</div>
+          <div className="mt-1 text-xs text-slate-400">Índice didáctico de simulación</div>
         </div>
 
-        <div className="rounded border border-slate-800/90 bg-[#060B14]/70 p-2.5">
+        <div className="rounded border border-[#334155] bg-[#060B14]/70 p-2.5">
           <div className="text-slate-400">Estado de protección</div>
           <div className="mt-1 text-sm font-semibold text-slate-100">
             {protection === 'shelter' ? 'Shelter Mode (Activo)' : 'Normal Habitat'}
           </div>
-          <div className="mt-1 text-[11px] text-slate-400">
+          <div className="mt-1 text-xs text-slate-400">
             {protection === 'shelter'
               ? 'Mitiga flujo solar; no elimina radiación al 100 %.'
               : 'Sin blindaje reforzado adicional.'}
           </div>
         </div>
 
-        <div className="rounded border border-slate-800/90 bg-[#060B14]/70 p-2.5">
+        <div className="rounded border border-[#334155] bg-[#060B14]/70 p-2.5">
           <div className="text-slate-400">Pronóstico del escenario</div>
           <div className="mt-1 text-slate-200 leading-snug">{context.radiationForecast}</div>
         </div>
@@ -101,7 +101,7 @@ export function RadiationPanel({
 
       {isStormWindow ? (
         <>
-          <div className="mt-3 rounded border border-slate-800/80 bg-[#060B14]/60 p-3 space-y-2">
+          <div className="mt-3 rounded border border-[#334155] bg-[#060B14]/60 p-3 space-y-2">
             <div className="flex items-center justify-between text-xs text-slate-300">
               <span>Comparativa ilustrativa en este ciclo (Límite seguro: {MAX_EXPOSURE} u)</span>
             </div>
