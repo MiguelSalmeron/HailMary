@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    color-scheme: dark;
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: #060b14;
+    color: #e6edf7;
+    margin: 0;
+    min-height: 100vh;
+  }
+
+  .font-mono-tabular {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #060b14;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #1e293b;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #334155;
+  }
+}
+
+.app-shell { max-width: 1440px; margin: auto; padding: 24px 32px; }
+.brand, .mission-heading, .execute { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+.brand { padding-bottom: 24px; border-bottom: 1px solid #334155; color: #94a3b8; font-size: 13px; }
+.brand strong { color: #67e8f9; font-size: 20px; }
+.brand strong span { color: #e6edf7; font-weight: 400; margin-left: 12px; }
+main { padding: 32px 0; }
+main:focus { outline: none; }
+h1 { font-size: clamp(28px, 4vw, 48px); font-weight: 600; line-height: 1.15; margin-bottom: 24px; text-wrap: balance; }
+h2 { font-size: 20px; font-weight: 600; margin-bottom: 12px; }
+p { line-height: 1.65; margin-bottom: 16px; }
+.intro { font-size: 20px; color: #cbd5e1; }
+.briefing { max-width: 960px; margin: 24px auto; }
+.briefing h1 { font-size: clamp(36px, 5vw, 64px); }
+.pillars { display: grid; grid-template-columns: 1fr 1fr; gap: 24px 40px; margin: 32px 0; }
+.pillars dt { color: #67e8f9; font-weight: 600; margin-bottom: 8px; }
+.pillars dd { line-height: 1.6; color: #cbd5e1; }
+button { cursor: pointer; min-height: 44px; }
+.actions { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 24px; }
+.primary { background: #67e8f9; color: #060b14; padding: 12px 24px; border-radius: 6px; font-weight: 600; }
+.primary:hover { background: #a5f3fc; }
+button:disabled { opacity: .45; cursor: not-allowed; }
+:focus-visible { outline: 2px solid #67e8f9; outline-offset: 4px; }
+a { color: #67e8f9; text-decoration: underline; text-underline-offset: 4px; }
+.mission-heading h1 { font-size: 28px; margin: 0; }
+.mission-heading h1 span { color: #67e8f9; white-space: nowrap; }
+progress { width: 100%; height: 5px; accent-color: #67e8f9; margin: 20px 0; }
+.cycle-context { margin-bottom: 24px; max-width: 85ch; }
+.telemetry { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 32px; }
+.execute { margin: 24px 0 32px; padding: 20px 0; border-block: 1px solid #334155; }
+.execute p { margin: 0; }
+.execute button { flex-shrink: 0; }
+.analysis { display: grid; grid-template-columns: 1.2fr 1fr; gap: 20px; }
+.assessments { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin: 40px 0; }
+.assessments strong { color: #fcd34d; }
+.legend { display: flex; gap: 20px; flex-wrap: wrap; margin: 12px 0 20px; }
+svg { max-width: 100%; }
+.table-scroll { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 12px; border-bottom: 1px solid #334155; }
+summary { cursor: pointer; padding: 12px 0; }
+footer { border-top: 1px solid #334155; padding-top: 24px; color: #94a3b8; font-size: 12px; line-height: 1.7; }
+@media (max-width: 1100px) { .telemetry { grid-template-columns: repeat(3, 1fr); } .analysis { grid-template-columns: 1fr; } }
+@media (max-width: 640px) { .app-shell { padding: 20px 16px; } .brand, .mission-heading, .execute { align-items: flex-start; flex-direction: column; gap: 12px; } .brand strong span { font-size: 16px; } .pillars, .assessments, .telemetry { grid-template-columns: 1fr; } .execute button { width: 100%; } .mission-heading h1 { font-size: 25px; } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } }
